@@ -50,6 +50,7 @@
           {
               $('.messages-body').append('<div class="message from" style="background-color:'+msg.userColor+'">'+msg.username+': '+msg.msg+'</div>');
           }
+          $('.messages-body').animate({ scrollTop: $(".messages-body")[0].scrollHeight}, 700);
       });
     </script>
   </body>
