@@ -7,27 +7,50 @@
   <body>
       <div class="app-wrap">
 
-<div class="messages-body">
-
-
-    <ul id="messages"></ul>
-</div>
-        <form action="">
+    <div class="messages-body">
+        <form id="message-enter" action="">
           <input id="m" autocomplete="off" /><button>Send</button>
         </form>
+    </div>
+
 
      </div>
+
+     <form id="user-create" action="">
+         Pick a username:
+       <input id="username" placeholder="Username" autocomplete="off" /><button>Send</button>
+     </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       var socket = io();
-      $('form').submit(function(){
+      var currentUser;
+
+      $('#user-create').submit(function(){
+         currentUser = $('#username').val();
+        socket.emit('user create', currentUser);
+        $('#username').val('');
+        $(this).hide();
+         $('#message-enter').show();
+        return false;
+      });
+
+      $('#message-enter').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
         return false;
       });
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+
+      socket.on('chat message', function(msg)
+      {
+          if (msg.username === currentUser)
+          {
+              $('.messages-body').append('<div class="message to">'+msg.username+': '+msg.msg+'</div>');
+          }
+          else
+          {
+              $('.messages-body').append('<div class="message from">'+msg.username+': '+msg.msg+'</div>');
+          }
       });
     </script>
   </body>
