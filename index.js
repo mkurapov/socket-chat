@@ -27,7 +27,6 @@ io.on('connection', function(socket){
     currentMessages.push(msg);
     savedChat = currentMessages.toString();
     //console.log(savedChat);
-
   });
 
   socket.on('user create', function(user){
@@ -42,6 +41,16 @@ io.on('connection', function(socket){
 
 
   });
+
+  socket.on('disconnect', function(userToRemove){
+      var i = users.indexOf(userToRemove);
+        if(i != -1)
+        {
+        array.splice(i, 1);
+        }
+    io.emit('update connected users', users);
+  });
+
 });
 
 function storeCookies(savedChat)

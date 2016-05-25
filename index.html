@@ -57,14 +57,21 @@
       });
       socket.on('user create', function(users)
       {
-          if (users.length == 1)
-          {
-              $('.user-list').append(users[0]);
-          }
-          else
-          {
-              $('.user-list').append(', '+users[users.length-1]);
-          }
+          var usersString = users.join(', ');
+
+          $('.user-list').append(usersString);
+      });
+      socket.on('disconnect', function(currentUser)
+      {
+          socket.emit('disconnect', currentUser);
+      });
+
+      socket.on('update connected users', function(users)
+      {
+            $('.user-list').empty();
+           var usersString = users.join(', ');
+            $('.user-list').append('Users connected: ');
+           $('.user-list').append(usersString);
 
       });
     </script>
