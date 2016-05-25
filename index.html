@@ -18,7 +18,7 @@
 
      <form id="user-create" action="">
          Pick a username:
-       <input id="username" placeholder="Username" autocomplete="off" /><button>Send</button>
+       <input id="username" placeholder="Username" autocomplete="off" /><button>Create</button>
      </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -41,8 +41,7 @@
         return false;
       });
 
-      socket.on('chat message', function(msg)
-      {
+      socket.on('chat message', function(msg){
           if (msg.username === currentUser)
           {
               $('.messages-body').append('<div class="message to">'+msg.username+': '+msg.msg+'</div>');
