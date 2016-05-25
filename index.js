@@ -33,10 +33,11 @@ io.on('connection', function(socket){
   socket.on('user create', function(user){
     users.push(user);
     socket.username = user;
-    var currentIndex = (users.length - 1);
+    var currentIndex = (users.length - 1) % userColorArray.length;
     socket.userColor = userColorArray[currentIndex];
     //io.emit('user create', user);
 
+    console.log(socket.userColor);
     console.log(users);
 
 
