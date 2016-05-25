@@ -7,6 +7,9 @@
   <body>
       <div class="messages-wrap">
     <div class="messages-body">
+        <div class="user-list">
+            Users connected:
+        </div>
 
         <form id="message-enter" action="">
           <input id="m" autocomplete="off" /><button>Send</button>
@@ -51,6 +54,18 @@
               $('.messages-body').append('<div class="message from" style="background-color:'+msg.userColor+'">'+msg.username+': '+msg.msg+'</div>');
           }
           $('.messages-body').animate({ scrollTop: $(".messages-body")[0].scrollHeight}, 700);
+      });
+      socket.on('user create', function(users)
+      {
+          if (users.length == 1)
+          {
+              $('.user-list').append(users[0]);
+          }
+          else
+          {
+              $('.user-list').append(', '+users[users.length-1]);
+          }
+
       });
     </script>
   </body>
