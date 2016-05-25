@@ -4,6 +4,8 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var port = process.env.PORT || 3000;
+
 var cookieSession = require('cookie-session');
 var cookieParser = require('cookie-parser');
 
@@ -57,6 +59,6 @@ function storeCookies(savedChat)
 
 }
 
-http.listen(3000, function(){
+http.listen(port, function(){
   console.log('listening on *:3000');
 });
