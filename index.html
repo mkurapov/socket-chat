@@ -5,9 +5,9 @@
     <link rel="stylesheet" href="css/style.min.css" />
   </head>
   <body>
-      <div class="app-wrap">
-
+      <div class="messages-wrap">
     <div class="messages-body">
+
         <form id="message-enter" action="">
           <input id="m" autocomplete="off" /><button>Send</button>
         </form>
@@ -18,7 +18,7 @@
 
      <form id="user-create" action="">
          Pick a username:
-       <input id="username" placeholder="Username" autocomplete="off" /><button>Create</button>
+       <input id="username" placeholder="Username" autocomplete="off" />
      </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -31,7 +31,7 @@
         socket.emit('user create', currentUser);
         $('#username').val('');
         $(this).hide();
-         $('#message-enter').show();
+         $('.messages-wrap').show();
         return false;
       });
 
@@ -44,11 +44,11 @@
       socket.on('chat message', function(msg){
           if (msg.username === currentUser)
           {
-              $('.messages-body').append('<div class="message to">'+msg.username+': '+msg.msg+'</div>');
+              $('.messages-body').append('<div class="message to" style="background-color:'+msg.userColor+'">'+msg.username+': '+msg.msg+'</div>');
           }
           else
           {
-              $('.messages-body').append('<div class="message from">'+msg.username+': '+msg.msg+'</div>');
+              $('.messages-body').append('<div class="message from" style="background-color:'+msg.userColor+'">'+msg.username+': '+msg.msg+'</div>');
           }
       });
     </script>

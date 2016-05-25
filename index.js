@@ -17,23 +17,26 @@ app.get('/', function(req, res){
 var currentMessages = [];
 var savedChat = [];
 var users = [];
+var userColorArray = ['#89aeed','#444','#4DB678','#F2AB11','#df5549','#dea8f0'];
 
 
 io.on('connection', function(socket){
 
   socket.on('chat message', function(msg){
-    io.emit('chat message', {msg: msg, username: socket.username});
+    io.emit('chat message', {msg: msg, username: socket.username, userColor: socket.userColor});
     currentMessages.push(msg);
     savedChat = currentMessages.toString();
-    storeCookies(savedChat);
-    console.log(savedChat);
+    //console.log(savedChat);
 
   });
 
   socket.on('user create', function(user){
-    socket.username = user;
-    io.emit('user create', user);
     users.push(user);
+    socket.username = user;
+    var currentIndex = (users.length - 1);
+    socket.userColor = userColorArray[currentIndex];
+    //io.emit('user create', user);
+
     console.log(users);
 
 
